@@ -57,7 +57,7 @@ function addelementtopagefromarray(tasksarray){
         taskdiv.className="task";
         //check if task is done
         if(task.completed){
-            task.className="task done";
+            taskdiv.className="task done";
         }
         taskdiv.setAttribute("data-id",task.id);
         taskdiv.appendChild(document.createTextNode(task.title));
