@@ -101,4 +101,6 @@ del.onclick=deleteAll;
 function deleteAll(){
     window.localStorage.removeItem("tasks");
     tasksdiv.innerHTML="";
+    tasksarray.length=0;
+    addelementtolocalstorage(tasksarray);
 }
