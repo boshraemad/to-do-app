@@ -3,6 +3,8 @@ let input=document.querySelector(".input");
 let submit=document.querySelector(".add");
 let tasksdiv=document.querySelector(".tasks");
 let del=document.querySelector(".delete-all");
+let editMenu=document.querySelector(".edit-menu");
+let inputEdit=document.querySelector(".input-edit");
 // create empty array to push tasks into it
 let tasksarray=[];
 // check if there is tasks in the local storage
@@ -54,18 +56,27 @@ function addelementtopagefromarray(tasksarray){
     //looping on the tasks of the array
     tasksarray.forEach((task)=>{
         let taskdiv=document.createElement("div");
+        let textt=document.createElement("div");
         taskdiv.className="task";
         //check if task is done
         if(task.completed){
             taskdiv.className="task done";
         }
         taskdiv.setAttribute("data-id",task.id);
-        taskdiv.appendChild(document.createTextNode(task.title));
+        textt.appendChild(document.createTextNode(task.title));
+        taskdiv.appendChild(textt);
+        taskdiv.setAttribute("value",task.title);
+        taskdiv.setAttribute("id",task.id);
         //create delete button
-        let span=document.createElement("span");
-        span.className="del";
-        span.appendChild(document.createTextNode("delete"));
-        taskdiv.appendChild(span);
+        let spanOne=document.createElement("span");
+        spanOne.className="del";
+        spanOne.appendChild(document.createTextNode("delete"));
+        taskdiv.appendChild(spanOne);
+        //create edit button
+        let spanTwo=document.createElement("span");
+        spanTwo.className="edit";
+        spanTwo.appendChild(document.createTextNode("edit"));
+        taskdiv.appendChild(spanTwo);
         //add task to the main tasks div
         tasksdiv.appendChild(taskdiv);
     });
@@ -104,3 +115,24 @@ function deleteAll(){
     tasksarray.length=0;
     addelementtolocalstorage(tasksarray);
 }
+//on click edit button
+tasksdiv.addEventListener("click",(e)=>{
+    if(e.target.classList.contains("edit")){
+        editMenu.classList.toggle("d-none");
+        inputEdit.setAttribute("placeholder","Edit Task Name");
+        document.querySelector(".save").onclick=()=>{
+            e.target.parentElement.firstChild.textContent=inputEdit.value;
+            editMenu.classList.toggle("d-none");
+            let idd=e.target.parentElement.getAttribute("id");
+            for(let i=0;i<tasksarray.length;++i){
+                if(tasksarray[i].id==idd){
+                    tasksarray[i].title=inputEdit.value;
+                }
+            }
+            addelementtolocalstorage(tasksarray);
+        }
+        document.querySelector(".cancel").onclick=()=>{
+            editMenu.classList.toggle("d-none");
+        }
+    }
+})
