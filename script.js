@@ -130,6 +130,8 @@ tasksdiv.addEventListener("click",(e)=>{
                 }
             }
             addelementtolocalstorage(tasksarray);
+            inputEdit.setAttribute("placeholder","Edit Task Name");
+            inputEdit.value="";
         }
         document.querySelector(".cancel").onclick=()=>{
             editMenu.classList.toggle("d-none");
